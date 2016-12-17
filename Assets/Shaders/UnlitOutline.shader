@@ -5,7 +5,7 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1,1,1,1)
 	    _OutlineColor ("Outline Color", Color) = (1, 1, 1, 1)
-        _OutlineSize ("Outline Size", Range(0, 0.02)) = 0.01
+        _OutlineSize ("Outline Size", Range(0, 0.2)) = 0.01
 	}
 	SubShader
 	{
@@ -79,9 +79,15 @@
 			{
 				v2f o;
 				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
-				half3 norm = mul((half3x3)UNITY_MATRIX_IT_MV, v.normal);
+
+				// Same outline width on different object scale
+				half3 norm = normalize(mul((half3x3)UNITY_MATRIX_IT_MV, v.normal));
 				half2 offset = TransformViewToProjection(norm.xy);
-				o.pos.xy += offset * o.pos.z * _OutlineSize;
+
+				// Same outline width on different object distance
+				float dist = length(ObjSpaceViewDir(v.vertex));
+				o.pos.xy += offset * o.pos.z * _OutlineSize * dist;
+
 				return o;
 			}
 			
