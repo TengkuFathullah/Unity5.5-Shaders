@@ -16,7 +16,6 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			// make fog work
 			
 			#include "UnityCG.cginc"
 
@@ -33,7 +32,6 @@
 			};
 
 			sampler2D _MainTex;
-			float4 _MainTex_ST;
 			float _Scale, _Speed, _Frequency;
 			
 			v2f vert (appdata v)
@@ -44,16 +42,13 @@
 				half offsetVert = 1 - ((v.vertex.x * v.vertex.x) + (v.vertex.z * v.vertex.z));
 				half value = _Scale * sin(_Time.w * _Speed + offsetVert * _Frequency);
 
-				//if (offsetVert > 0)
-					o.vertex.y += value;
+				o.vertex.y += value;
 				return o;
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				// sample the texture
-				fixed4 col = tex2D(_MainTex, i.uv);
-				return col;
+				return tex2D(_MainTex, i.uv);
 			}
 			ENDCG
 		}
