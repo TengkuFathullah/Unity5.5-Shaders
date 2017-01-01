@@ -5,6 +5,11 @@ using DG.Tweening;
 
 public class ShaderLabUI : MonoBehaviour 
 {
+    void Start()
+    {
+        directLight = true;
+    }
+
     #region Camera
     public CameraRotate camRotate;
 
@@ -16,6 +21,15 @@ public class ShaderLabUI : MonoBehaviour
     public void Static()
     {
         camRotate.enabled = false;
+    }
+    #endregion
+
+    #region Light
+    public Light directionalLight;
+    bool directLight;
+    public void DirectionalLight()
+    {
+        directLight = directionalLight.enabled = !directLight;
     }
     #endregion
 
