@@ -22,6 +22,8 @@ public class SceneController : MonoBehaviour
         }
         set
         {
+            if (value > shaders.Length - 1)
+                value = 0;
             PlayerPrefs.SetInt("shader_index", value);
         }
     }
