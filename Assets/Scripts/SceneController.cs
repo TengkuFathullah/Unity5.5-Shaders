@@ -28,6 +28,20 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    int currentModelIndex 
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("model_index", 0);
+        }
+        set
+        {
+            if (value > models.Length - 1)
+                value = 0;
+            PlayerPrefs.SetInt("model_index", value);
+        }
+    }
+
     public void SwitchShader()
     {
         currentShaderIndex++;
@@ -40,4 +54,11 @@ public class SceneController : MonoBehaviour
         }
     }
 	
+    public void SwitchModel()
+    {
+        currentModelIndex++;
+        targetObject.SetActive(false);
+        targetObject = models[currentModelIndex];
+        targetObject.SetActive(true);
+    }
 }
