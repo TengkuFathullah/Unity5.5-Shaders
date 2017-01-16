@@ -8,6 +8,7 @@ public class ShaderLabUI : MonoBehaviour
     void Start()
     {
         directLight = true;
+        Static();
     }
 
     #region Camera
